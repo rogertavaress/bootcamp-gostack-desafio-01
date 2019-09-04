@@ -1,6 +1,7 @@
 # Desafio 01. Conceitos do NodeJS
 
 Preciso criar uma aplicação usando o Express.
+
 Essa aplicação será utilizada para armazenar projetos e suas tarefas.
 
 ## Rotas
@@ -34,3 +35,7 @@ Se eu chamar a rota `POST /projects` repassando `{ id: 1, title: 'Novo projeto' 
 - Crie um middleware que será utilizado em todas rotas que recebem o ID do projeto nos parâmetros da URL que verifica se o projeto com aquele ID existe. Se não existir retorne um erro, caso contrário permita a requisição continuar normalmente;
 
 - Crie um middleware global chamado em todas requisições que imprime (`console.log`) uma contagem de quantas requisições foram feitas na aplicação até então;
+
+## Final
+
+Esse desafio faz parte do curso da Rocketseat - GoStack.
