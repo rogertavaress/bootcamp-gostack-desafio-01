@@ -28,7 +28,13 @@ server.post("/projects", (req, res) => {
   return res.json(projects);
 });
 
-server.get("/projects", () => {
+server.get("/projects", (req, res) => {
+  return res.json(projects);
+});
+
+server.put("/projects/:id", (req, res) => {
+  const { id } = req.params;
+
   return res.json(projects);
 });
 
