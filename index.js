@@ -5,19 +5,32 @@ const server = express();
 
 server.use(express.json());
 
-server.use((req, res, next) => {
-  console.time("Request");
-  console.log(`Metodo: ${req.method}; URL: ${req.url}`);
-
-  next();
-
-  console.timeEnd("Request");
-});
-
 const projects = [];
+var i = 0;
+
+function numberReq(req, res, next) {
+  i++;
+  next();
+  console.log(`Requisição de Numero: ${i}.`);
+}
+
+function checkID(req, res, next) {
+  const { id } = req.params;
+
+  if (!id) {
+    return res.status(400).json({ error: "Precisa colocar o ID" });
+  } else {
+    for (proj of projects) {
+      if (proj.id == id) {
+        return next();
+      }
+    }
+    return res.status(400).json({ error: "Não tem Projeto com esse ID" });
+  }
+}
 
 //Metodo para Incluir um novo projeto
-server.post("/projects", (req, res) => {
+server.post("/projects", numberReq, (req, res) => {
   const { id, title } = req.body;
 
   projects.push({
@@ -30,12 +43,12 @@ server.post("/projects", (req, res) => {
 });
 
 //Metodo para mostrar os projetos existentes
-server.get("/projects", (req, res) => {
+server.get("/projects", numberReq, (req, res) => {
   return res.json(projects);
 });
 
 //Metodo para alterar o titulo do projeto pelo ID
-server.put("/projects/:id", (req, res) => {
+server.put("/projects/:id", numberReq, checkID, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
@@ -49,7 +62,7 @@ server.put("/projects/:id", (req, res) => {
 });
 
 //Metodo deletar projeto
-server.delete("/projects/:id", (req, res) => {
+server.delete("/projects/:id", numberReq, checkID, (req, res) => {
   const { id } = req.params;
   let index = 0;
 
@@ -64,7 +77,7 @@ server.delete("/projects/:id", (req, res) => {
 });
 
 //Adicionar Tasks
-server.post("/projects/:id/tasks", (req, res) => {
+server.post("/projects/:id/tasks", numberReq, checkID, (req, res) => {
   const { id } = req.params;
   const { title } = req.body;
 
