@@ -11,5 +11,7 @@
   },
   "devDependencies": {
     "nodemon": "^1.19.2"
-  }
+  },
+  "repository": "https://github.com/rogertavaress/bootcamp-gostack-desafio-01.git",
+  "author": "rogertavaress <rogerioctf@gmail.com>"
 }
